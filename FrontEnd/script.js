@@ -1,4 +1,4 @@
-// declaration de la fonction asynchrone
+// declaration de la fonction asynchrone ------------------------------------------------
 async function RecuperationDonnesApi() {
   // recuperation des informations depuis l'api
   const reponse = await fetch("http://localhost:5678/api/works");
@@ -27,22 +27,42 @@ async function RecuperationDonnesApi() {
 // appel de la fonction
 RecuperationDonnesApi();
 
-// effet de changement de couleur des boutons du filtre
-document.addEventListener("DOMContentLoaded", function () {
+// --------------------------------------------------------------------------------------
+// ajout des filtres avec js
+async function RecuperationFiltresApi() {
+  // recuperation des filtres depuis l'api
+  const reponseFiltres = await fetch("http://localhost:5678/api/categories");
+  const Filtres = await reponseFiltres.json();
+
+  for (let i = 0; i < Filtres.length; i++) {
+    const emplacementFiltre = Filtres[i];
+
+    // creation balises
+    const FiltresDiv = document.querySelector(".Filtres");
+
+    const buttonFiltre = document.createElement("button");
+    buttonFiltre.setAttribute("class", "Button-filter");
+    buttonFiltre.textContent = emplacementFiltre.name;
+
+    FiltresDiv.appendChild(buttonFiltre);
+  }
   const Button_Filter = document.querySelectorAll(".Button-filter");
 
+  // changements couleurs bouton
   Button_Filter.forEach(function (bouton) {
     bouton.addEventListener("click", function () {
-      Button_Filter.forEach(function (btn) {
-        btn.style.backgroundColor = "";
-        btn.style.color = "";
-        // permet de definir une réinitialisation du style par defaut des boutons à chaques click
+      Button_Filter.forEach(function (bouton) {
+        bouton.style.backgroundColor = "";
+        bouton.style.color = "";
+        // permet de definir un reset du style par defaut des boutons à chaques click
       });
       bouton.style.backgroundColor = "#1d6154";
       bouton.style.color = "white";
-      //   au click sur un bouton, sa couleur de fond change ainsi que la couleur de la police
+      //   au click sur un bouton, sa couleur de fond change et la couleur de la police aussi
     });
+    const boutonTous = document.getElementById("Tous");
+    boutonTous.click();
+    // bouton "Tous" selectionné par defaut
   });
-  const boutonTous = document.getElementById("Tous");
-  boutonTous.click();
-});
+}
+RecuperationFiltresApi();
