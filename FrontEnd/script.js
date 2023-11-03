@@ -46,6 +46,7 @@ async function RecuperationFiltresApi() {
       RecuperationDonnesApi().then((info) => {
         const projetFiltre = info.filter(
           (works) => works.category.name === categorie || categorie === "Tous"
+          // les doubles || indique "ou" en js
         );
 
         document.querySelector(".gallery").innerHTML = "";
