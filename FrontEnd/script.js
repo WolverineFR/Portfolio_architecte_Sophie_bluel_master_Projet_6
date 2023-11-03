@@ -1,31 +1,16 @@
+let projets = [];
+
 // declaration de la fonction asynchrone ------------------------------------------------
 async function RecuperationDonnesApi() {
   // recuperation des informations depuis l'api
-  const reponse = await fetch("http://localhost:5678/api/works");
-  const Projets = await reponse.json();
-
-  for (let i = 0; i < Projets.length; i++) {
-    const article = Projets[i];
-
-    // creation balises
-    const figure = document.createElement("figure");
-
-    const imageElement = document.createElement("img");
-    imageElement.src = article.imageUrl;
-
-    const titleElement = document.createElement("figcaption");
-    titleElement.innerHTML = article.title;
-
-    figure.appendChild(imageElement);
-    figure.appendChild(titleElement);
-
-    // ajouter les balises à son parent
-    const sectionGallery = document.querySelector(".gallery");
-    sectionGallery.appendChild(figure);
+  if (projets.length < 1) {
+    const reponse = await fetch("http://localhost:5678/api/works");
+    const projetApi = await reponse.json();
+    projets = projetApi;
   }
+  return projets;
 }
-// appel de la fonction
-RecuperationDonnesApi();
+// appel de la fonction et recuperation des elements ---------------------------------
 
 // --------------------------------------------------------------------------------------
 // ajout des filtres avec js
@@ -43,6 +28,7 @@ async function RecuperationFiltresApi() {
     const buttonFiltre = document.createElement("button");
     buttonFiltre.setAttribute("class", "Button-filter");
     buttonFiltre.textContent = emplacementFiltre.name;
+    buttonFiltre.id = emplacementFiltre.id;
 
     FiltresDiv.appendChild(buttonFiltre);
   }
@@ -56,13 +42,43 @@ async function RecuperationFiltresApi() {
         bouton.style.color = "";
         // permet de definir un reset du style par defaut des boutons à chaques click
       });
+      const categorie = bouton.textContent;
+      RecuperationDonnesApi().then((info) => {
+        const projetFiltre = info.filter(
+          (works) => works.category.name === categorie || categorie === "Tous"
+        );
+
+        document.querySelector(".gallery").innerHTML = "";
+        projetFiltre.forEach((projet) => createDOM(projet));
+      });
       bouton.style.backgroundColor = "#1d6154";
       bouton.style.color = "white";
       //   au click sur un bouton, sa couleur de fond change et la couleur de la police aussi
     });
-    const boutonTous = document.getElementById("Tous");
-    boutonTous.click();
-    // bouton "Tous" selectionné par defaut
   });
 }
 RecuperationFiltresApi();
+
+// -------------------------------------------------------------------------------------
+
+function createDOM(article) {
+  // creation balises
+  const figure = document.createElement("figure");
+
+  const imageElement = document.createElement("img");
+  imageElement.src = article.imageUrl;
+  imageElement.alt = article.title;
+
+  const titleElement = document.createElement("figcaption");
+  titleElement.innerHTML = article.title;
+
+  figure.appendChild(imageElement);
+  figure.appendChild(titleElement);
+
+  // ajouter les balises à son parent
+  const sectionGallery = document.querySelector(".gallery");
+  sectionGallery.appendChild(figure);
+}
+RecuperationDonnesApi().then((projets) => {
+  projets.forEach((projet) => createDOM(projet));
+});
