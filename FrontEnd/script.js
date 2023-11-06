@@ -83,3 +83,29 @@ function createDOM(article) {
 RecuperationDonnesApi().then((projets) => {
   projets.forEach((projet) => createDOM(projet));
 });
+
+// fonction pour afficher icon modifier quand login
+function editPage() {
+  const projetBoxTitle = document.querySelector(".projetBoxTitle");
+
+  const editButton = document.createElement("div");
+  const editIcon = document.createElement("i");
+
+  editIcon.classList.add("fa-regular", "fa-pen-to-square");
+  const text = document.createTextNode(" modifier");
+  editButton.setAttribute("id", "editButton");
+  editButton.classList.add("editButton");
+  projetBoxTitle.appendChild(editButton);
+  editButton.appendChild(editIcon);
+  editButton.appendChild(text);
+}
+
+// déclaration du token + utilisation
+document.addEventListener("DOMContentLoaded", function () {
+  const tokenActif = localStorage.getItem("token");
+  if (tokenActif) {
+    editPage();
+  } else {
+    console.log("vous n'etes pas connecté");
+  }
+});

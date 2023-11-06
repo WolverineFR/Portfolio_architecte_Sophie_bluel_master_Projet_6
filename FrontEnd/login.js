@@ -11,19 +11,20 @@ document.addEventListener("DOMContentLoaded", function () {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          userId: 1,
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1MTg3NDkzOSwiZXhwIjoxNjUxOTYxMzM5fQ.JGN1p8YIfR-M-5eQ-Ypy6Ima5cKA4VbfL2xMr2MgHm4",
         },
         body: JSON.stringify({ email, password }),
       })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.authenticated) {
-            console.log("Bravo");
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
           } else {
-            console.log("Identifiant incorrect");
+            alert("E-mail ou mot de passe incorrect");
           }
+        })
+        .then((data) => {
+          data.authenticated;
+          localStorage.setItem("token", data);
+          window.location.href = "index.html";
         });
     });
 });
