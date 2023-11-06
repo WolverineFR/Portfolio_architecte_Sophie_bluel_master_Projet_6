@@ -84,7 +84,7 @@ RecuperationDonnesApi().then((projets) => {
   projets.forEach((projet) => createDOM(projet));
 });
 
-// fonction pour afficher icon modifier quand login
+// fonction pour afficher icon "modifier" quand login
 function editPage() {
   const projetBoxTitle = document.querySelector(".projetBoxTitle");
 
@@ -100,11 +100,38 @@ function editPage() {
   editButton.appendChild(text);
 }
 
+// fonction ajout barre noir edition
+function editionMode() {
+  const editMode = document.querySelector(".edit-mode");
+
+  const editBarre = document.createElement("div");
+  const editIcon = document.createElement("i");
+  editIcon.classList.add("fa-regular", "fa-pen-to-square");
+  const text = document.createTextNode("Mode édition");
+  editBarre.classList.add("editBarre");
+  editMode.appendChild(editBarre);
+  editBarre.appendChild(editIcon);
+  editBarre.appendChild(text);
+}
+
+// fonction permettant la déconnexion
+function logOut() {
+  const logoutButton = document.getElementById("login-logout");
+
+  logoutButton.textContent = "logout";
+  logoutButton.href = "";
+  logoutButton.addEventListener("click", function () {
+    localStorage.clear();
+  });
+}
+
 // déclaration du token + utilisation
 document.addEventListener("DOMContentLoaded", function () {
   const tokenActif = localStorage.getItem("token");
   if (tokenActif) {
     editPage();
+    editionMode();
+    logOut();
   } else {
     console.log("vous n'etes pas connecté");
   }

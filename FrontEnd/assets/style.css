@@ -135,6 +135,18 @@ body {
   font-family: "Work Sans";
   font-size: 14px;
 }
+/* ajout du bandeau noir en mode edition */
+.editBarre {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  color: white;
+  height: 59px;
+  width: 100%;
+  gap: 10px;
+}
+
 header {
   display: flex;
   justify-content: space-between;
