@@ -142,9 +142,13 @@ body {
   justify-content: center;
   background-color: black;
   color: white;
-  height: 59px;
+  height: 39px;
   width: 100%;
   gap: 10px;
+  position: fixed;
+  top: 0;
+  left: 0px;
+  z-index: 30;
 }
 
 header {
@@ -278,6 +282,8 @@ li a:hover {
   cursor: pointer;
   top: 10px;
   right: 27em;
+  border: none;
+  background-color: #fffef8;
 }
 
 input[type="submit"] {
@@ -394,4 +400,117 @@ footer nav ul {
 
 .FooterLogin {
   margin-top: 360px;
+}
+
+/* modal */
+
+.modal-container {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 29;
+  left: 0;
+  transition: visibility 0.4s;
+}
+
+.modal-container.active {
+  visibility: visible;
+}
+
+.overlay {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #0000004d;
+  transition: opacity 0.4s 0.2s ease-out;
+}
+
+.modal-container.active .overlay {
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+}
+
+.modal-content {
+  opacity: 0;
+  width: 95%;
+  max-width: 630px;
+  min-width: 300px;
+  border-radius: 10px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 0;
+  padding-right: 0;
+  background-color: white;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% - 50px));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.modal-container.active .modal-content {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.4s 0.2s ease-out, transform 0.4s 0.2s ease-out;
+}
+
+.close-modal {
+  border: none;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  background-color: white;
+  font-size: 22px;
+  color: black;
+}
+
+.modal-content h1 {
+  margin-bottom: 30px;
+  margin-top: 20px;
+  font-family: "Work sans";
+  font-size: 26px;
+  font-weight: 400;
+  color: #000000;
+}
+
+.add-pic-btn {
+  background-color: #1d6154;
+  color: white;
+  border-radius: 60px;
+  width: 237px;
+  height: 36px;
+  border: none;
+  font-family: "Syne";
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.pics-container {
+  width: 70%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 50px;
+}
+
+.pics-container figure {
+  height: 100px;
+  width: 78px;
+}
+
+.pics-container figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

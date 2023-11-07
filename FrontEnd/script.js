@@ -88,16 +88,23 @@ RecuperationDonnesApi().then((projets) => {
 function editPage() {
   const projetBoxTitle = document.querySelector(".projetBoxTitle");
 
-  const editButton = document.createElement("div");
+  const editButton = document.createElement("button");
   const editIcon = document.createElement("i");
 
   editIcon.classList.add("fa-regular", "fa-pen-to-square");
   const text = document.createTextNode(" modifier");
   editButton.setAttribute("id", "editButton");
-  editButton.classList.add("editButton");
+  editButton.classList.add("editButton", "modal-trigger", "modal-btn");
   projetBoxTitle.appendChild(editButton);
   editButton.appendChild(editIcon);
   editButton.appendChild(text);
+}
+
+// enlever les filtres quand connecté
+function filtreRemove() {
+  const removeFilter = document.querySelector(".Filtres");
+
+  removeFilter.style.display = "none";
 }
 
 // fonction ajout barre noir edition
@@ -125,13 +132,49 @@ function logOut() {
   });
 }
 
+// modal script
+function modalActivation() {
+  const modalContainer = document.querySelector(".modal-container");
+  const modalTriggers = document.querySelectorAll(".modal-trigger");
+
+  modalTriggers.forEach((trigger) =>
+    trigger.addEventListener("click", toggleModal)
+  );
+
+  function toggleModal() {
+    modalContainer.classList.toggle("active");
+  }
+}
+
+// ajout des images dans modal
+function createDOMmodal(article) {
+  const figure = document.createElement("figure");
+
+  const imageElement = document.createElement("img");
+  imageElement.src = article.imageUrl;
+  imageElement.alt = article.title;
+
+  figure.appendChild(imageElement);
+
+  // ajouter les balises à son parent
+  const picsContainer = document.querySelector(".pics-container");
+  picsContainer.appendChild(figure);
+}
+
 // déclaration du token + utilisation
 document.addEventListener("DOMContentLoaded", function () {
   const tokenActif = localStorage.getItem("token");
+
   if (tokenActif) {
+    filtreRemove();
     editPage();
     editionMode();
     logOut();
+    modalActivation();
+
+    RecuperationDonnesApi().then((projets) => {
+      projets.forEach((projet) => createDOMmodal(projet));
+    });
   } else {
     console.log("vous n'etes pas connecté");
   }
