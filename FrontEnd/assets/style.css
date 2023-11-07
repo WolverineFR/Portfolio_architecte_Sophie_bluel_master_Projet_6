@@ -501,7 +501,9 @@ footer nav ul {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #b3b3b3;
 }
 
 .pics-container figure {
