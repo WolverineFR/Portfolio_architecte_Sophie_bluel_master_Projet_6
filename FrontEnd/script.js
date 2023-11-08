@@ -149,12 +149,18 @@ function modalActivation() {
 // ajout des images dans modal
 function createDOMmodal(article) {
   const figure = document.createElement("figure");
-
   const imageElement = document.createElement("img");
   imageElement.src = article.imageUrl;
   imageElement.alt = article.title;
-
   figure.appendChild(imageElement);
+
+  const trashBox = document.createElement("div");
+  const icon = document.createElement("i");
+  trashBox.classList.add("Trash-box");
+  icon.classList.add("fa-solid", "fa-trash-can");
+
+  trashBox.appendChild(icon);
+  figure.appendChild(trashBox);
 
   // ajouter les balises à son parent
   const picsContainer = document.querySelector(".pics-container");
@@ -173,7 +179,9 @@ document.addEventListener("DOMContentLoaded", function () {
     modalActivation();
 
     RecuperationDonnesApi().then((projets) => {
-      projets.forEach((projet) => createDOMmodal(projet));
+      projets.forEach((projet) => {
+        createDOMmodal(projet);
+      });
     });
   } else {
     console.log("vous n'etes pas connecté");

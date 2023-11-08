@@ -32,7 +32,37 @@
         <div class="pics-container"></div>
         <button class="add-pic-btn">Ajouter une photo</button>
       </div>
+      <!-- second modal -->
+      <div class="modal-content modal-seconde-page">
+        <button class="close-modal modal-trigger">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <h1>Ajout photo</h1>
+        <!-- ajout image -->
+        <div class="add-img-box">
+          <i class="fa-regular fa-image"></i>
+          <input type="file" id="file" class="inputAddPics" />
+          <label for="file" class="btn-add-pics">+ Ajouter photo</label>
+          <p class="tailleMax">jpg, png : 4Mo max</p>
+        </div>
+        <!-- formulaire -->
+        <div class="form-box">
+          <form class="form-title-et-categories">
+            <label for="title-article">Title</label>
+            <input type="text" id="title-article" />
+            <label for="selectBox">Catégorie</label>
+            <select id="selectBox" name="choix">
+              <option value="option0"></option>
+              <option value="option1">Objets</option>
+              <option value="option2">Appartements</option>
+              <option value="option3">Hotels & restaurants</option>
+            </select>
+            <button class="add-pic-btn second-btn">Valider</button>
+          </form>
+        </div>
+      </div>
     </div>
+    <!-- HEADER -->
     <header>
       <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
       <nav>
