@@ -167,6 +167,64 @@ function createDOMmodal(article) {
   picsContainer.appendChild(figure);
 }
 
+// permet d'ecouter les evenements dans les modales
+function ecouteureventBTN() {
+  const addpicBTN = document.querySelector(".add-pic-btn");
+  const secondModal = document.querySelector(".modal-second-page");
+  const firstModal = document.querySelector(".first-modal");
+
+  addpicBTN.addEventListener("click", function () {
+    firstModal.style.display = "none";
+    secondModal.style.display = "flex";
+
+    const returnBTN = document.querySelector(".return-btn");
+    returnBTN.addEventListener("click", function () {
+      firstModal.style.display = "";
+      secondModal.style.display = "";
+    });
+  });
+}
+
+function uploadIMG() {
+  const imgUploaded = document.querySelector(".imgUploaded");
+  const inputAddpics = document.querySelector(".inputAddPics");
+
+  const boxDisplay = document.querySelector(".box-display");
+
+  inputAddpics.addEventListener("change", () => {
+    imgUploaded.src = URL.createObjectURL(inputAddpics.files[0]);
+    imgUploaded.style.display = "initial";
+    boxDisplay.style.display = "none";
+  });
+}
+
+function addIMG() {
+  document
+    .getElementById("sendIMG")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const titleIMG = document.getElementById("title-article").value;
+      const categoryIMG = document.getElementById("selectBox").value;
+      const fileInput = document.getElementById("file");
+
+      const formData = new FormData();
+      formData.append("title", titleIMG);
+      formData.append("category", categoryIMG);
+      formData.append("image", fileInput.files[0]);
+
+      const token = localStorage.getItem("token");
+
+      fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Baerer ${token}`,
+        },
+      }).then((response) => response.json());
+    });
+}
+
 // déclaration du token + utilisation
 document.addEventListener("DOMContentLoaded", function () {
   const tokenActif = localStorage.getItem("token");
@@ -183,6 +241,9 @@ document.addEventListener("DOMContentLoaded", function () {
         createDOMmodal(projet);
       });
     });
+    ecouteureventBTN();
+    uploadIMG();
+    addIMG();
   } else {
     console.log("vous n'etes pas connecté");
   }

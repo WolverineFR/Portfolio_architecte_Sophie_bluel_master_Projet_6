@@ -491,7 +491,7 @@ footer nav ul {
   font-weight: 700;
   font-size: 14px;
   line-height: 17px;
-  margin-top: 26px;
+  margin-top: 45px;
   cursor: pointer;
 }
 
@@ -532,8 +532,8 @@ footer nav ul {
   right: 5px;
 }
 
-.modal-seconde-page {
-  display: flex;
+.modal-second-page {
+  display: none;
 }
 
 .add-img-box {
@@ -547,10 +547,23 @@ footer nav ul {
   justify-content: center;
 }
 
+.box-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .fa-image {
   color: #b9c5cc;
   font-size: 60px;
   margin-bottom: 10px;
+}
+
+.imgUploaded {
+  height: 100%;
+  object-fit: cover;
+  display: none;
 }
 
 .tailleMax {
@@ -615,6 +628,17 @@ select {
 .second-btn {
   background-color: #a7a7a7;
   cursor: not-allowed;
-  margin-left: 90px;
+  margin-left: 92px;
   margin-top: 50px;
+}
+
+.return-btn {
+  border: none;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  cursor: pointer;
+  background-color: white;
+  font-size: 22px;
+  color: black;
 }

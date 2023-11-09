@@ -24,7 +24,7 @@
     <!-- modal -->
     <div class="modal-container">
       <div class="overlay modal-trigger"></div>
-      <div class="modal-content">
+      <div class="modal-content first-modal">
         <button class="close-modal modal-trigger">
           <i class="fa-solid fa-xmark"></i>
         </button>
@@ -33,21 +33,27 @@
         <button class="add-pic-btn">Ajouter une photo</button>
       </div>
       <!-- second modal -->
-      <div class="modal-content modal-seconde-page">
+      <div class="modal-content modal-second-page">
+        <button class="return-btn">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
         <button class="close-modal modal-trigger">
           <i class="fa-solid fa-xmark"></i>
         </button>
         <h1>Ajout photo</h1>
         <!-- ajout image -->
         <div class="add-img-box">
-          <i class="fa-regular fa-image"></i>
-          <input type="file" id="file" class="inputAddPics" />
-          <label for="file" class="btn-add-pics">+ Ajouter photo</label>
-          <p class="tailleMax">jpg, png : 4Mo max</p>
+          <img class="imgUploaded" src="" />
+          <div class="box-display">
+            <i class="fa-regular fa-image"></i>
+            <input type="file" id="file" class="inputAddPics" />
+            <label for="file" class="btn-add-pics">+ Ajouter photo</label>
+            <p class="tailleMax">jpg, png : 4Mo max</p>
+          </div>
         </div>
         <!-- formulaire -->
         <div class="form-box">
-          <form class="form-title-et-categories">
+          <form id="sendIMG" class="form-title-et-categories">
             <label for="title-article">Title</label>
             <input type="text" id="title-article" />
             <label for="selectBox">Catégorie</label>
