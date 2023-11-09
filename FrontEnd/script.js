@@ -213,17 +213,18 @@ function addIMG() {
       formData.append("category", categoryIMG);
       formData.append("image", fileInput.files[0]);
 
-      const token = localStorage.getItem("token");
+      const token = JSON.parse(localStorage.getItem("token"));
 
       fetch("http://localhost:5678/api/works", {
         method: "POST",
         body: formData,
         headers: {
-          Authorization: `Baerer ${token}`,
+          Authorization: `Bearer ${token.token}`,
         },
       }).then((response) => response.json());
     });
 }
+// !!!! AJOUTER POUR FAIRE EN SORTE QU'IL N Y EST PAS DE RECHARGEMENT DE PAGE
 
 // déclaration du token + utilisation
 document.addEventListener("DOMContentLoaded", function () {
