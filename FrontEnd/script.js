@@ -196,6 +196,37 @@ function uploadIMG() {
     imgUploaded.src = URL.createObjectURL(inputAddpics.files[0]);
     imgUploaded.style.display = "initial";
     boxDisplay.style.display = "none";
+    submitBtnVerificator();
+  });
+
+  // activation du bouton de submit si form rempli
+  const submitBTN = document.getElementById("submitBTN");
+  const inputTitle = document.getElementById("title-article");
+  const selectBox = document.getElementById("selectBox");
+
+  function submitBtnVerificator() {
+    const titleValue = inputTitle.value;
+    const selectValue = selectBox.value;
+    const imageLoaded = imgUploaded.src !== "about:blank";
+    // ça ne marche pas a voir pour modif
+
+    if (titleValue !== "" && selectValue > 0 && imageLoaded) {
+      submitBTN.disabled = false;
+      submitBTN.style.backgroundColor = "#1d6154";
+      submitBTN.style.cursor = "pointer";
+    } else {
+      submitBTN.disabled = true;
+      submitBTN.style.backgroundColor = "#a7a7a7";
+      submitBTN.style.cursor = "not-allowed";
+    }
+  }
+
+  inputTitle.addEventListener("keyup", () => {
+    submitBtnVerificator();
+  });
+
+  selectBox.addEventListener("change", () => {
+    submitBtnVerificator();
   });
 }
 
