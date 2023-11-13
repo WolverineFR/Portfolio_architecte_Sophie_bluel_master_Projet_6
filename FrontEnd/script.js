@@ -10,7 +10,6 @@ async function RecuperationDonnesApi() {
   }
   return projets;
 }
-// appel de la fonction et recuperation des elements ---------------------------------
 
 // --------------------------------------------------------------------------------------
 // ajout des filtres avec js
@@ -65,6 +64,7 @@ RecuperationFiltresApi();
 function createDOM(article) {
   // creation balises
   const figure = document.createElement("figure");
+  figure.setAttribute("id", article.id);
 
   const imageElement = document.createElement("img");
   imageElement.src = article.imageUrl;
@@ -158,6 +158,7 @@ function createDOMmodal(article) {
   const icon = document.createElement("i");
   trashBox.classList.add("Trash-box");
   icon.classList.add("fa-solid", "fa-trash-can");
+  trashBox.setAttribute("id-article", article.id);
 
   trashBox.appendChild(icon);
   figure.appendChild(trashBox);
@@ -221,10 +222,48 @@ function addIMG() {
         headers: {
           Authorization: `Bearer ${token.token}`,
         },
-      }).then((response) => response.json());
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          createDOM(data);
+        });
     });
 }
-// !!!! AJOUTER POUR FAIRE EN SORTE QU'IL N Y EST PAS DE RECHARGEMENT DE PAGE
+
+function removeDOMfigure() {
+  const gallery = document.querySelector(".gallery");
+  const figureRemove = gallery.querySelector("figure");
+
+  if (figureRemove) {
+    figureRemove.remove();
+  }
+}
+
+function deleteIMG() {
+  const picsContainer = document.querySelector(".pics-container");
+
+  picsContainer.addEventListener("click", function (e) {
+    const trashBox = e.target.closest(".Trash-box");
+
+    if (trashBox) {
+      e.preventDefault();
+      const articleId = trashBox.getAttribute("id-article");
+
+      const id = articleId;
+
+      const token = JSON.parse(localStorage.getItem("token"));
+
+      fetch(`http://localhost:5678/api/works/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token.token}`,
+        },
+      }).then((response) => response.json());
+      trashBox.closest("figure").remove();
+      removeDOMfigure();
+    }
+  });
+}
 
 // déclaration du token + utilisation
 document.addEventListener("DOMContentLoaded", function () {
@@ -245,6 +284,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ecouteureventBTN();
     uploadIMG();
     addIMG();
+    deleteIMG();
   } else {
     console.log("vous n'etes pas connecté");
   }
