@@ -44,7 +44,7 @@
         <!-- ajout image -->
         <div class="add-img-box">
           <i class="fa-solid fa-xmark cancel-Img"></i>
-          <img class="imgUploaded" src="" />
+          <img class="imgUploaded" src="data" alt="" />
           <div class="box-display">
             <i class="fa-regular fa-image"></i>
             <input type="file" id="file" class="inputAddPics" />
@@ -59,7 +59,9 @@
             <input type="text" id="title-article" />
             <label for="selectBox">Catégorie</label>
             <select id="selectBox" name="choix">
-              <option value="option0"></option>
+              <option disabled selected value="option0">
+                Choisir catégorie
+              </option>
               <option value="1">Objets</option>
               <option value="2">Appartements</option>
               <option value="3">Hotels & restaurants</option>
