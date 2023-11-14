@@ -240,6 +240,8 @@ li a:hover {
 
 .gallery img {
   width: 100%;
+  object-fit: cover;
+  height: 100%;
 }
 #contact {
   width: 50%;
@@ -546,6 +548,15 @@ footer nav ul {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.cancel-Img {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  cursor: pointer;
+  display: none;
 }
 
 .box-display {

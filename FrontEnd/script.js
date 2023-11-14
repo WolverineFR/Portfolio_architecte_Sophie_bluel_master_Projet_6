@@ -191,12 +191,36 @@ function uploadIMG() {
   const inputAddpics = document.querySelector(".inputAddPics");
 
   const boxDisplay = document.querySelector(".box-display");
+  const cancelBTN = document.querySelector(".cancel-Img");
 
   inputAddpics.addEventListener("change", () => {
-    imgUploaded.src = URL.createObjectURL(inputAddpics.files[0]);
-    imgUploaded.style.display = "initial";
-    boxDisplay.style.display = "none";
-    submitBtnVerificator();
+    const files = inputAddpics.files;
+
+    if (files[0].size > 4 * 1024 * 1024) {
+      alert("Le fichier ne peut pas dépasser 4 Mo");
+      inputAddpics.value = "";
+    } else {
+      const formatAutorise = ["jpeg", "png", "jpg"];
+      const fileExtension = files[0].name.split(".").pop().toLowerCase();
+
+      if (!formatAutorise.includes(fileExtension)) {
+        alert("Votre fichier doit être au format .png ou .jpg");
+        inputAddpics.value = "";
+      } else {
+        imgUploaded.src = URL.createObjectURL(inputAddpics.files[0]);
+        imgUploaded.style.display = "initial";
+        boxDisplay.style.display = "none";
+        cancelBTN.style.display = "initial";
+        submitBtnVerificator();
+      }
+    }
+  });
+
+  cancelBTN.addEventListener("click", () => {
+    inputAddpics.value = "";
+    imgUploaded.style.display = "none";
+    boxDisplay.style.display = "flex";
+    cancelBTN.style.display = "none";
   });
 
   // activation du bouton de submit si form rempli
@@ -207,8 +231,7 @@ function uploadIMG() {
   function submitBtnVerificator() {
     const titleValue = inputTitle.value;
     const selectValue = selectBox.value;
-    const imageLoaded = imgUploaded.src !== "about:blank";
-    // ça ne marche pas a voir pour modif
+    const imageLoaded = inputAddpics.files.length > 0;
 
     if (titleValue !== "" && selectValue > 0 && imageLoaded) {
       submitBTN.disabled = false;
