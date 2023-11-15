@@ -27,7 +27,6 @@ async function RecuperationFiltresApi() {
     const buttonFiltre = document.createElement("button");
     buttonFiltre.setAttribute("class", "Button-filter");
     buttonFiltre.textContent = emplacementFiltre.name;
-    buttonFiltre.id = emplacementFiltre.id;
 
     FiltresDiv.appendChild(buttonFiltre);
   }
@@ -158,7 +157,7 @@ function createDOMmodal(article) {
   const icon = document.createElement("i");
   trashBox.classList.add("Trash-box");
   icon.classList.add("fa-solid", "fa-trash-can");
-  trashBox.setAttribute("id-article", article.id);
+  trashBox.dataset.idArticle = article.id;
 
   trashBox.appendChild(icon);
   figure.appendChild(trashBox);
@@ -217,6 +216,8 @@ function uploadIMG() {
   });
 
   cancelBTN.addEventListener("click", () => {
+    document.getElementById("file").files[0] = "";
+    submitBTN.disabled = true;
     inputAddpics.value = "";
     imgUploaded.style.display = "none";
     boxDisplay.style.display = "flex";
@@ -280,13 +281,13 @@ function addIMG() {
         .then((response) => response.json())
         .then((data) => {
           createDOM(data);
+          createDOMmodal(data);
         });
     });
 }
 
-function removeDOMfigure() {
-  const gallery = document.querySelector(".gallery");
-  const figureRemove = gallery.querySelector("figure");
+function removeDOMfigure(id) {
+  const figureRemove = document.getElementById(id);
 
   if (figureRemove) {
     figureRemove.remove();
@@ -301,7 +302,7 @@ function deleteIMG() {
 
     if (trashBox) {
       e.preventDefault();
-      const articleId = trashBox.getAttribute("id-article");
+      const articleId = trashBox.dataset.idArticle;
 
       const id = articleId;
 
@@ -314,7 +315,7 @@ function deleteIMG() {
         },
       }).then((response) => response.json());
       trashBox.closest("figure").remove();
-      removeDOMfigure();
+      removeDOMfigure(id);
     }
   });
 }

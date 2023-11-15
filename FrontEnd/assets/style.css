@@ -454,6 +454,7 @@ footer nav ul {
   align-items: center;
   flex-direction: column;
   transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+  overflow-y: auto;
 }
 
 .modal-container.active .modal-content {
